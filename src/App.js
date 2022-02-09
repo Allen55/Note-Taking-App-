@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState, useEffect } from "react"
 import Sidebar from "./components/Sidebar"
 import Editor from "./components/Editor"
 import { data } from "./data"
@@ -17,10 +17,16 @@ import "react-mde/lib/styles/css/react-mde-all.css";
  */
 
 export default function App() {
-    const [notes, setNotes] = React.useState(data)
-    const [currentNoteId, setCurrentNoteId] = React.useState(
+    const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")) || []);
+    const [currentNoteId, setCurrentNoteId] = useState(
         (notes[0] && notes[0].id) || ""
     )
+
+    useEffect(() => {
+      localStorage.setItem("notes", JSON.stringify(notes))
+      console.log('notes are changing')
+    }, [notes])
+    //console.log(localStorage)
     
     function createNewNote() {
         const newNote = {
@@ -67,6 +73,7 @@ export default function App() {
                     <Editor 
                         currentNote={findCurrentNote()} 
                         updateNote={updateNote} 
+                        
                     />
                 }
             </Split>

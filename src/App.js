@@ -8,25 +8,18 @@ import './style.css'
 import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-/**
- * Challenge: Spend 10-20+ minutes reading through the code
- * and trying to understand how it's currently working. Spend
- * as much time as you need to feel confident that you 
- * understand the existing code (although you don't need
- * to fully understand everything to move on)
- */
 
 export default function App() {
-    const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")) || []);
+    const [notes, setNotes] = useState(() =>JSON.parse(localStorage.getItem("notes")) || []);
     const [currentNoteId, setCurrentNoteId] = useState(
         (notes[0] && notes[0].id) || ""
     )
-
+    
     useEffect(() => {
-      localStorage.setItem("notes", JSON.stringify(notes))
-      console.log('notes are changing')
+      localStorage.setItem("notes", JSON.stringify(notes)) // key: value
+      //console.log(JSON.stringify(notes[0].body).replace(/\n/g, " ").replace(/\"/g, ""))
     }, [notes])
-    //console.log(localStorage)
+    
     
     function createNewNote() {
         const newNote = {
@@ -50,6 +43,8 @@ export default function App() {
             return note.id === currentNoteId
         }) || notes[0]
     }
+
+
     
     return (
         <main>

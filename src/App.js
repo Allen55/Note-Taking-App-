@@ -20,7 +20,6 @@ export default function App() {
       //console.log(JSON.stringify(notes[0].body).replace(/\n/g, " ").replace(/\"/g, ""))
     }, [notes])
     
-    
     function createNewNote() {
         const newNote = {
             id: nanoid(),
@@ -29,13 +28,26 @@ export default function App() {
         setNotes(prevNotes => [newNote, ...prevNotes])
         setCurrentNoteId(newNote.id)
     }
-    
+
     function updateNote(text) {
-        setNotes(oldNotes => oldNotes.map(oldNote => {
-            return oldNote.id === currentNoteId
-                ? { ...oldNote, body: text }
-                : oldNote
-        }))
+      setNotes(oldNotes => {
+        const newArray = []
+        for(let i = 0; i < oldNotes.length; i++) {
+          const oldNote = oldNotes[i];
+          if(oldNote.id === currentNoteId) {
+            newArray.unshift({ ...oldNote, body: text });
+          } else {
+            newArray.push(oldNote)
+          }
+        }
+        return newArray;
+      })
+    }
+
+    function deleteNote(event, noteId) {
+      event.stopPropagation()
+      //console.log('deleted note:', noteId)
+      setNotes(oldNotes => oldNotes.filter(note =>  note.id !== noteId))
     }
     
     function findCurrentNote() {
@@ -43,8 +55,6 @@ export default function App() {
             return note.id === currentNoteId
         }) || notes[0]
     }
-
-
     
     return (
         <main>
@@ -61,6 +71,7 @@ export default function App() {
                     currentNote={findCurrentNote()}
                     setCurrentNoteId={setCurrentNoteId}
                     newNote={createNewNote}
+                    deleteNote={deleteNote}
                 />
                 {
                     currentNoteId && 

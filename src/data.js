@@ -1,19 +1,21 @@
 export const data = [
     {
         id: 1,
-        body: `### This just in!
+        body: `### Hello! In case you wanted to see what it was built with:
+        
+        "dependencies": {
+            "@testing-library/jest-dom": "^5.16.2",
+            "@testing-library/react": "^12.1.2",
+            "@testing-library/user-event": "^13.5.0",
+            "nanoid": "^3.2.0",
+            "react-mde": "^11.5.0",
+            "react-split": "^2.0.14",
+            "showdown": "^2.0.0-alpha",
+        
+        }
 
-Markdown is an *awesome* way to write **very basic HTML** by typing manually
-
-It can be used for:
-
-1. README files
-1. Slack and Discord messages
-1. **So much more!**
-
----
-
-Here's a division 👆`,
+        Your notes are in local storage:)
+            `,  
     },
     { id: 2, body: `a` },
     { id: 3, body: `b` },
